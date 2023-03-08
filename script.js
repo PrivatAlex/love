@@ -13,11 +13,20 @@ if (inWorking === 'true') {
   button.disabled = true;
 }
 
-let latitude;
-let longitude;
-navigator.geolocation.getCurrentPosition(function(position) {
-  latitude = position.coords.latitude;
-  longitude = position.coords.longitude;
+
+let message;
+navigator.geolocation.getCurrentPosition(function (position) {
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
+
+  message = `!!!!Срочно!!!! Вызов Кунимистера!!!! 
+      Вас ждут по этим координатам: 
+      https://www.google.com/maps?q=${ latitude },${ longitude }`;
+
+  if (latitude !== undefined && longitude !== undefined) {
+    button.addEventListener('click', sendMessage);
+  }
+  return message;
 })
 
 function sendMessage() {
@@ -27,17 +36,13 @@ function sendMessage() {
   inWorking = 'true'
   localStorage.setItem('inWorking', inWorking);
 
-  const message = `!!!!Срочно!!!! Вызов Кунимистера!!!! 
-      Вас ждут по этим координатам: 
-      https://www.google.com/maps?q=${latitude},${longitude}`;
-
   const url = `https://api.telegram.org/bot${ token }/sendMessage?chat_id=${ chatId }&text=${ encodeURIComponent(
     message) }`;
 
   fetch(url)
     .then(response => {
       if (response.ok) {
-        alert('Сообщение с координатами отправлено!');
+        console.log('Сообщение с координатами отправлено!');
       } else {
         alert('Произошла ошибка при отправке сообщения.');
       }
@@ -45,10 +50,7 @@ function sendMessage() {
     .catch(error => {
       alert(`Произошла ошибка: ${ error.message }`);
     });
-
 }
-
-button.addEventListener('click', sendMessage);
 
 done.addEventListener('click', () => {
   done.style.display = 'none'
