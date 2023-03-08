@@ -1,11 +1,8 @@
-// Получаем элемент кнопки на странице
 const button = document.querySelector('.btn');
 const done = document.querySelector('.btn-done');
 
-// Задаем ID чата, куда нужно отправлять сообщение
 const chatId = '-986617584';
 
-// Задаем токен бота
 const token = '5988246646:AAEflFYLn0lXT0PM26KhenL3hNt7OBqUJbM';
 
 let inWorking = localStorage.getItem('inWorking');
@@ -16,6 +13,13 @@ if (inWorking === 'true') {
   button.disabled = true;
 }
 
+let latitude;
+let longitude;
+navigator.geolocation.getCurrentPosition(function(position) {
+  latitude = position.coords.latitude;
+  longitude = position.coords.longitude;
+})
+
 function sendMessage() {
   button.classList.toggle('wait');
   done.style.display = 'block'
@@ -23,16 +27,17 @@ function sendMessage() {
   inWorking = 'true'
   localStorage.setItem('inWorking', inWorking);
 
+  const message = `!!!!Срочно!!!! Вызов Кунимистера!!!! 
+      Вас ждут по этим координатам: 
+      https://www.google.com/maps?q=${latitude},${longitude}`;
 
-  const message = '!!!!Срочно!!!! Вызов Кунимистера!!!!';
   const url = `https://api.telegram.org/bot${ token }/sendMessage?chat_id=${ chatId }&text=${ encodeURIComponent(
     message) }`;
 
   fetch(url)
     .then(response => {
-      // Если ответ сервера успешный, выводим сообщение об успехе
       if (response.ok) {
-        console.log('Сообщение отправлено!');
+        alert('Сообщение с координатами отправлено!');
       } else {
         alert('Произошла ошибка при отправке сообщения.');
       }
@@ -43,7 +48,6 @@ function sendMessage() {
 
 }
 
-// Обработчик нажатия на кнопку
 button.addEventListener('click', sendMessage);
 
 done.addEventListener('click', () => {
