@@ -41,17 +41,16 @@ span {
 }
 
 button {
+  position: absolute;
   border: none;
-  background: rgba(248, 77, 39, 1);
-  border-radius: 26px;
-  height: 96px;
-  width: 492px;
-  margin-top: 61px;
+  top: 1030px;
+  left: 427px;
+  background: rgb(209 125 135);
+  border-radius: 50%;
+  height: 193px;
+  width: 262px;
   font-family: 'Raleway', sans-serif;
   font-size: 50px;
-  font-weight: 700;
-  line-height: 28px;
-  letter-spacing: 0em;
   text-align: center;
   color: rgba(255, 255, 255, 1);
   text-shadow: 3px 2px 6px #e3c30d;
@@ -61,16 +60,18 @@ button {
 
 button:active {
   transition: all 0.2s linear;
-  background: rgb(210, 54, 22);
+  background: rgb(170, 102, 110);
 }
 
 .btn-done {
   display: none;
+  top: 821px;
 }
 
 .wait {
   background: rgba(229, 183, 173, 0.21);
   color: rgba(255, 255, 255, 0.17);
+  text-shadow: 3px 2px 6px #ed93d8;
   cursor: wait;
 }
 
