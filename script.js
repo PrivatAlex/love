@@ -43,7 +43,7 @@ function sendMessage() {
   fetch(url)
     .then(response => {
       if (response.ok) {
-        console.log('Сообщение с координатами отправлено!');
+        alert('Сообщение с координатами отправлено! Ожидайте Кунимастера!!!');
       } else {
         alert('Произошла ошибка при отправке сообщения.');
       }
@@ -81,13 +81,11 @@ const ratesColor = document.querySelectorAll('input[type="radio"]');
 // Добавляем обработчик события на каждую radio-кнопку
 ratesColor.forEach((rateButton, index) => {
   rateButton.addEventListener('click', () => {
-    // Перекрашиваем все звезды до выбранной в зеленый цвет
     for (let i = 0; i <= index; i++) {
       const star = document.querySelectorAll('.star')[i];
       star.style.color = 'orange';
     }
 
-    // Перекрашиваем все звезды после выбранной в серый цвет
     for (let i = index + 1; i < ratesColor.length; i++) {
       const star = document.querySelectorAll('.star')[i];
       star.style.color = 'black';
