@@ -1,5 +1,6 @@
 const button = document.querySelector('.btn');
 const done = document.querySelector('.btn-done');
+const modal = document.querySelector('.modal');
 
 const chatId = '-986617584';
 
@@ -58,4 +59,64 @@ done.addEventListener('click', () => {
   button.disabled = false;
   inWorking = 'false'
   localStorage.setItem('inWorking', inWorking);
+  modal.style.display = 'flex'
+})
+
+const btnRate = document.querySelector('.rate');
+const radioButtons = document.getElementsByName('rating');
+let rate;
+let evolution;
+let messageRate;
+
+function getAverage(rate) {
+  let sum = 0;
+  for (let i = 0; i < rate.length; i++) {
+    sum += Number(rate[i]);
+  }
+  return sum / rate.length;
+}
+
+function sendMessageRate() {
+  rate = JSON.parse(localStorage.getItem('rate'));
+  if (rate === null){
+    rate = []
+  }
+
+  for (let i = 0; i < radioButtons.length; i++) {
+    if (radioButtons[i].checked) {
+      evolution = radioButtons[i].value;
+      rate.push(`${radioButtons[i].value}`);
+    }
+  }
+
+  if (evolution === undefined) {
+    evolution = 1;
+    rate.push(evolution);
+  }
+
+  localStorage.setItem('rate', JSON.stringify(rate));
+
+  messageRate = `Предоставленную Вами услугу оценили на ${evolution} баллов!
+                 Ваш средний рейтинг ${getAverage(rate)}`;
+
+  const url = `https://api.telegram.org/bot${ token }/sendMessage?chat_id=${ chatId }&text=${ encodeURIComponent(
+    messageRate) }`;
+
+  fetch(url)
+    .then(response => {
+      if (response.ok) {
+        alert('Сообщение с оценкой отправлено!');
+      } else {
+        alert('Произошла ошибка при отправке сообщения.');
+      }
+    })
+    .catch(error => {
+      alert(`Произошла ошибка: ${ error.message }`);
+    });
+}
+
+btnRate.addEventListener('click', (event) => {
+  event.preventDefault();
+  sendMessageRate();
+  modal.style.display = 'none';
 })
