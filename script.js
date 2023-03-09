@@ -76,6 +76,25 @@ function getAverage(rate) {
   return sum / rate.length;
 }
 
+const ratesColor = document.querySelectorAll('input[type="radio"]');
+
+// Добавляем обработчик события на каждую radio-кнопку
+ratesColor.forEach((rateButton, index) => {
+  rateButton.addEventListener('click', () => {
+    // Перекрашиваем все звезды до выбранной в зеленый цвет
+    for (let i = 0; i <= index; i++) {
+      const star = document.querySelectorAll('.star')[i];
+      star.style.color = 'orange';
+    }
+
+    // Перекрашиваем все звезды после выбранной в серый цвет
+    for (let i = index + 1; i < ratesColor.length; i++) {
+      const star = document.querySelectorAll('.star')[i];
+      star.style.color = 'black';
+    }
+  });
+});
+
 function sendMessageRate() {
   rate = JSON.parse(localStorage.getItem('rate'));
   if (rate === null){
