@@ -1,5 +1,6 @@
 const button = document.querySelector(".btn");
 const done = document.querySelector(".btn-done");
+const errorWork = document.querySelector(".btn-error");
 const modal = document.querySelector(".modal");
 
 const chatId = "-986617584";
@@ -32,6 +33,7 @@ navigator.geolocation.getCurrentPosition(function (position) {
 function sendMessage() {
 	button.classList.toggle("wait");
 	done.style.display = "block";
+	errorWork.style.display = "block";
 	button.disabled = true;
 	inWorking = "true";
 	localStorage.setItem("inWorking", inWorking);
@@ -53,14 +55,27 @@ function sendMessage() {
 		});
 }
 
-done.addEventListener("click", () => {
+function endWorkOk() {
 	done.style.display = "none";
+	errorWork.style.display = "none";
 	button.classList.toggle("wait");
 	button.disabled = false;
 	inWorking = "false";
 	localStorage.setItem("inWorking", inWorking);
-	modal.style.display = "flex";
-});
+}
+
+function endWorkBad() {
+	done.style.display = "none";
+	errorWork.style.display = "none";
+	button.classList.toggle("wait");
+	button.disabled = false;
+	inWorking = "false";
+	sendMessageRate()
+}
+
+done.addEventListener("click", endWorkOk);
+
+errorWork.addEventListener('click', endWorkBad)
 
 const btnRate = document.querySelector(".rate");
 const radioButtons = document.getElementsByName("rating");
