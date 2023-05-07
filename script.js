@@ -71,6 +71,7 @@ function endWorkBad() {
 	button.classList.toggle("wait");
 	button.disabled = false;
 	inWorking = "false";
+	localStorage.setItem("inWorking", inWorking);
 	sendMessageRate()
 }
 
