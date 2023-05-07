@@ -120,16 +120,16 @@ function sendMessageRate() {
 		rate = [];
 	}
 
+	if (evolution === undefined) {
+		evolution = 1;
+		rate.push(evolution);
+	}
+
 	for (let i = 0; i < radioButtons.length; i++) {
 		if (radioButtons[i].checked) {
 			evolution = radioButtons[i].value;
 			rate.push(`${radioButtons[i].value}`);
 		}
-	}
-
-	if (evolution === undefined) {
-		evolution = 1;
-		rate.push(evolution);
 	}
 
 	localStorage.setItem("rate", JSON.stringify(rate));
