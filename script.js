@@ -62,6 +62,7 @@ function endWorkOk() {
 	button.disabled = false;
 	inWorking = "false";
 	localStorage.setItem("inWorking", inWorking);
+	modal.style.display = "flex";
 }
 
 function endWorkBad() {
@@ -85,10 +86,12 @@ let messageRate;
 
 function getAverage(rate) {
 	let sum = 0;
+	let result
 	for (let i = 0; i < rate.length; i++) {
 		sum += Number(rate[i]);
 	}
-	return sum / rate.length;
+	result = sum / rate.length;
+	return Number(result.toFixed(2))
 }
 
 const ratesColor = document.querySelectorAll('input[type="radio"]');

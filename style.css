@@ -136,3 +136,4 @@ input[type="radio"] {
 input[type="radio"]:checked ~ .star {
   color: orange;
 }
+
